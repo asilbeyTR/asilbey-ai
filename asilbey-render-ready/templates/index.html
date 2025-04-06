@@ -1,28 +1,23 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>AsilBey AI Danışmanı</title>
-  <link rel="stylesheet" href="/static/css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AsilBey AI Danışman</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
 </head>
 <body>
-  <div class="content">
-    <h1>AsilBey Sanal Akademi</h1>
-    <p>Sağ alttaki AI panelinden danışmanlık alabilirsin.</p>
-  </div>
-  <div id="chat-widget">
-    <div id="chat-header" onclick="toggleChat()">🤖 AI Danışman</div>
-    <div id="chat-body" style="display: none;">
-      <div id="chat-box">
-        <div class="bot">Merhaba! Hedefini yaz, sana uygun eğitimleri önereyim.</div>
-      </div>
-      <div class="input-area">
-        <input type="text" id="user-input" placeholder="örnek: oyun geliştirmek istiyorum">
-        <button onclick="sendMessage()">Gönder</button>
-      </div>
+  <div class="chat-container">
+    <div class="chat-header">🤖 AI Danışman</div>
+    <div class="chat-box" id="chatBox">
+      <div class="message bot">Merhaba! Hedefini yaz, sana uygun eğitimleri önereyim.</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="userInput" placeholder="örnek: oyun geliştirmek istiyorum" />
+      <button onclick="sendMessage()">Gönder</button>
     </div>
   </div>
-<script src="/static/js/script.js"></script>
+
+  <script src="/static/js/script.js"></script>
 </body>
 </html>
