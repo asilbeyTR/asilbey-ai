@@ -1,32 +1,30 @@
-
-function toggleChat() {
-  const body = document.getElementById("chat-body");
-  body.style.display = body.style.display === "none" ? "block" : "none";
-}
 async function sendMessage() {
-  const input = document.getElementById("user-input");
-  const chatBox = document.getElementById("chat-box");
+  const input = document.getElementById("userInput");
+  const chatBox = document.getElementById("chatBox");
   const message = input.value.trim();
   if (!message) return;
 
-  const userMsg = document.createElement("div");
-  userMsg.className = "user";
-  userMsg.innerText = "👤 " + message;
-  chatBox.appendChild(userMsg);
+  // Kullanıcı mesajını göster
+  chatBox.innerHTML += '<div class="message user">' + message + "</div>";
+  chatBox.innerHTML += '<div class="message bot">🤖 yanıtlanıyor...</div>';
+  chatBox.scrollTop = chatBox.scrollHeight;
   input.value = "";
 
-  const botMsg = document.createElement("div");
-  botMsg.className = "bot";
-  botMsg.innerText = "🤖 yanıtlanıyor...";
-  chatBox.appendChild(botMsg);
-  chatBox.scrollTop = chatBox.scrollHeight;
+  // Yanıtı al
+  try {
+    const response = await fetch("/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message })
+    });
 
-  const res = await fetch("/api/chat", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({message})
-  });
-  const data = await res.json();
-  botMsg.innerText = "🤖 " + data.reply;
-  chatBox.scrollTop = chatBox.scrollHeight;
+    const data = await response.json();
+    const messages = document.querySelectorAll(".message.bot");
+    messages[messages.length - 1].innerText = "🤖 " + data.reply;
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+  } catch (error) {
+    const messages = document.querySelectorAll(".message.bot");
+    messages[messages.length - 1].innerText = "🤖 Hata oluştu!";
+  }
 }
